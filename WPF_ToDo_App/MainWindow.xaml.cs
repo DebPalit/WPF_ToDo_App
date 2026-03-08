@@ -19,10 +19,17 @@ namespace WPF_ToDo_App
         public MainWindow()
         {
             InitializeComponent();
+            NothingTodo();
         }
 
-        private void createTodo_Click(object sender, RoutedEventArgs e)
+        private bool removeNothingTodo = false;
+        private void CreateTodo_Click(object sender, RoutedEventArgs e)
         {
+            if (!removeNothingTodo)
+            {
+                taskShow.Children.Clear();
+                removeNothingTodo = true;
+            }
             string taskInputText = taskInput.Text;
 
             if (!string.IsNullOrEmpty(taskInputText) && taskInputText.Length<200)
@@ -30,6 +37,7 @@ namespace WPF_ToDo_App
                 string taskInputText_timestamp = $"[{DateTime.Now}]: {taskInputText}";
 
                 CreateDynamicCheckBox(taskInputText_timestamp);
+
                 taskInput.Clear();
             }
             else
@@ -38,7 +46,7 @@ namespace WPF_ToDo_App
                     "\nNote: task must be under 200 characters.", "Input Required", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-        private void removeTodo_Click(object sender, RoutedEventArgs e)
+        private void RemoveTodo_Click(object sender, RoutedEventArgs e)
         {
             if (!taskShow.Children.OfType<CheckBox>().Any())
             {
@@ -84,6 +92,27 @@ namespace WPF_ToDo_App
 
             foreach (CheckBox cb in toRemove)
                 stackPanel.Children.Remove(cb);
+
+            if (!stackPanel.Children.OfType<CheckBox>().Any())
+            {
+                NothingTodo();
+                removeNothingTodo = false;
+            }
+        }
+
+        private void NothingTodo()
+        {
+            TextBlock textBlock = new TextBlock
+            {
+                Text = "Nothing To Do! Enjoy Life!",
+                TextWrapping = TextWrapping.Wrap,
+                Foreground = new SolidColorBrush(Colors.MediumOrchid),
+                FontWeight = FontWeights.Bold,
+                FontSize = 15,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+            taskShow.Children.Add(textBlock);
         }
     }
 }
