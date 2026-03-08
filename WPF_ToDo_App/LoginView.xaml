@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="WPF_ToDo_App.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_ToDo_App"
+             mc:Ignorable="d" 
+             Height="300" Width="400">
+    <Grid Background="CadetBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Please Login" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" 
+               HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="20"/>
+        <Button Style="{StaticResource GreenBtn}" Click="LoginButton_Click" Grid.Column="1" Content="Login" HorizontalAlignment="Center" Grid.Row="5" 
+                VerticalAlignment="Center" Height="50" Width="96" Grid.ColumnSpan="2" FontWeight="Bold"/>
+        <Label Content="   User Name: " Grid.Row="2" Grid.Column="1"
+            HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" FontSize="15"/>
+        <Label Content="Password: " Grid.Row="3" Grid.Column="1"
+            HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" FontSize="15"/>
+        <TextBox Grid.Column="2" HorizontalAlignment="Left" Grid.Row="2"
+                     TextWrapping="Wrap" VerticalAlignment="Center" Width="170" Height="30" FontWeight="Bold" FontSize="15"/>
+
+        <TextBox Grid.Column="2" HorizontalAlignment="Left" Grid.Row="3" 
+                 TextWrapping="Wrap" VerticalAlignment="Center" Width="170" Height="30" FontWeight="Bold" FontSize="15"/>
+
+        <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="7" Fill="Teal"/>
+        <Rectangle Grid.Row="0" Grid.Column="3" Grid.RowSpan="7" Fill="Teal"/>
+        <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Fill="Teal"/>
+        <Rectangle Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4" Fill="Teal"/>
+    </Grid>
+</UserControl>

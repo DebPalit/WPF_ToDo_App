@@ -40,11 +40,11 @@
         </Style>
 
         <Style x:Key="RedBtn"   BasedOn="{StaticResource BaseBtn}" TargetType="Button">
-            <Setter Property="Background" Value="#EF5350"/>
+            <Setter Property="Background" Value="Maroon"/>
         </Style>
 
         <Style x:Key="GreenBtn" BasedOn="{StaticResource BaseBtn}" TargetType="Button">
-            <Setter Property="Background" Value="#43A047"/>
+            <Setter Property="Background" Value="ForestGreen"/>
         </Style>
 
         <Style x:Key="GrayBtn"  BasedOn="{StaticResource BaseBtn}" TargetType="Button">

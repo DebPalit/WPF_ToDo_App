@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="WPF_ToDo_App.AppView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_ToDo_App"
+             mc:Ignorable="d" 
+             Height="500" Width="500">
+    <Grid Background="Teal">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Style="{StaticResource RedBtn}" Click="RemoveTodo_Click"  Grid.Column="1" Content="Remove ToDo" 
+                HorizontalAlignment="Left" Margin="250,0,0,0" Grid.Row="5" VerticalAlignment="Center" 
+                Height="60" Width="128" FontWeight="Bold" BorderBrush="Black" Background="Maroon"/>
+
+        <Button Style="{StaticResource GreenBtn}" Click="CreateTodo_Click" Grid.Column="1" Content="Create ToDo" 
+                HorizontalAlignment="Left" Margin="100,0,0,0" Grid.Row="5" VerticalAlignment="Center" 
+                Height="60" Width="128" FontWeight="Bold" Background="ForestGreen" BorderBrush="Black"/>
+
+        <TextBox x:Name="taskInput" Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" Background="Black" Foreground="White" Text="Enter New Task Here..."/>
+        <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="taskShow" Background ="DarkGray"></StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>
