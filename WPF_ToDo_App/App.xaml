@@ -4,6 +4,51 @@
              xmlns:local="clr-namespace:WPF_ToDo_App"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!-- Base style -->
+        <Style x:Key="BaseBtn" TargetType="Button">
+            <Setter Property="Padding"         Value="18,8"/>
+            <Setter Property="Foreground"      Value="White"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="6"
+                            Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.85"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.7"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Color variants -->
+        <Style x:Key="BlueBtn"  BasedOn="{StaticResource BaseBtn}" TargetType="Button">
+            <Setter Property="Background" Value="#5C6BC0"/>
+        </Style>
+
+        <Style x:Key="RedBtn"   BasedOn="{StaticResource BaseBtn}" TargetType="Button">
+            <Setter Property="Background" Value="#EF5350"/>
+        </Style>
+
+        <Style x:Key="GreenBtn" BasedOn="{StaticResource BaseBtn}" TargetType="Button">
+            <Setter Property="Background" Value="#43A047"/>
+        </Style>
+
+        <Style x:Key="GrayBtn"  BasedOn="{StaticResource BaseBtn}" TargetType="Button">
+            <Setter Property="Background" Value="#888"/>
+        </Style>
     </Application.Resources>
 </Application>

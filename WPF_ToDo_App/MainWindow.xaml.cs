@@ -25,40 +25,48 @@ namespace WPF_ToDo_App
         {
             string taskInputText = taskInput.Text;
 
-            if (!string.IsNullOrEmpty(taskInputText))
+            if (!string.IsNullOrEmpty(taskInputText) && taskInputText.Length<200)
             {
                 string taskInputText_timestamp = $"[{DateTime.Now}]: {taskInputText}";
-                //TextBlock newTask = new TextBlock
-                //{
-                //    Text = taskInputText,
-                //    Margin = new Thickness(5),
-                //    Foreground = new SolidColorBrush(Colors.White)
-                //};
 
-                //taskShow.Children.Add(newTask);
                 CreateDynamicCheckBox(taskInputText_timestamp);
                 taskInput.Clear();
             }
             else
             {
-                MessageBox.Show("Please enter a task before creating a To-Do item.", "Input Required", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please enter a valid task before creating a To-Do item." +
+                    "\nNote: task must be under 200 characters.", "Input Required", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
         private void removeTodo_Click(object sender, RoutedEventArgs e)
         {
+            if (!taskShow.Children.OfType<CheckBox>().Any())
+            {
+                MessageBox.Show("There are no tasks to remove.", "No Tasks", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             RemoveCheckedTasks(taskShow);
         }
 
         private void CreateDynamicCheckBox(string taskText)
         {
-            CheckBox newCheckBox = new CheckBox
+
+            TextBlock textBlock = new TextBlock
             {
-                Content = taskText,
-                Margin = new Thickness(5),
+                Text = taskText + "\n",
+                TextWrapping = TextWrapping.Wrap,
                 Foreground = new SolidColorBrush(Colors.DarkBlue),
                 FontWeight = FontWeights.Bold,
                 FontSize = 15
             };
+
+            CheckBox newCheckBox = new CheckBox
+            {
+                Content = textBlock,
+                VerticalContentAlignment = VerticalAlignment.Top
+            };
+
             taskShow.Children.Add(newCheckBox);
         }
         private void RemoveCheckedTasks(StackPanel stackPanel)
