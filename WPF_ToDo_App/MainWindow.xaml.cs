@@ -20,5 +20,27 @@ namespace WPF_ToDo_App
         {
             InitializeComponent();
         }
+
+        private void createTodo_Click(object sender, RoutedEventArgs e)
+        {
+            string taskInputText = taskInput.Text;
+
+            if (!string.IsNullOrEmpty(taskInputText))
+            {
+                TextBlock newTask = new TextBlock
+                {
+                    Text = taskInputText,
+                    Margin = new Thickness(5),
+                    Foreground = new SolidColorBrush(Colors.White)
+                };
+
+                taskShow.Children.Add(newTask);
+                taskInput.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Please enter a task before creating a To-Do item.", "Input Required", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }
