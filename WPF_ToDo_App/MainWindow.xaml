@@ -21,11 +21,11 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="1" Content="Remove ToDo" HorizontalAlignment="Left" Margin="250,0,0,0" Grid.Row="5" VerticalAlignment="Center" Height="60" Width="128" FontWeight="Bold" BorderBrush="Black" Background="#FF922727"/>
+        <Button Click="removeTodo_Click"  Grid.Column="1" Content="Remove ToDo" HorizontalAlignment="Left" Margin="250,0,0,0" Grid.Row="5" VerticalAlignment="Center" Height="60" Width="128" FontWeight="Bold" BorderBrush="Black" Background="#FF922727"/>
         <Button Click="createTodo_Click" Grid.Column="1" Content="Create ToDo" HorizontalAlignment="Left" Margin="100,0,0,0" Grid.Row="5" VerticalAlignment="Center" Height="60" Width="128" FontWeight="Bold" Background="#FF008311" BorderBrush="Black"/>
         <TextBox x:Name="taskInput" Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" Background="Black" Foreground="White" Text="Enter New Task Here..."/>
         <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto">
-            <StackPanel x:Name="taskShow" Background ="Gray"></StackPanel>
+            <StackPanel x:Name="taskShow" Background ="DarkGray"></StackPanel>
         </ScrollViewer>
 
     </Grid>
