@@ -25,8 +25,16 @@ namespace WPF_ToDo_App
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-           // For demonstration purposes, we will just navigate to the AppView without actual authentication
-           Window.GetWindow(this).Content = new AppView();
+            LoginLogic login = new LoginLogic(UserName.Text, PassWord.Text);
+            if (login.UserAuthentication())
+            {
+                // For demonstration purposes, we will just navigate to the AppView without actual authentication
+                Window.GetWindow(this).Content = new AppView();
+            }
+            else
+            {
+                MessageBox.Show("Username or Password invalid ", "Invalid Login", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }
