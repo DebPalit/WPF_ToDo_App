@@ -25,7 +25,7 @@ namespace WPF_ToDo_App
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            LoginLogic login = new LoginLogic(UserName.Text, PassWord.Text);
+            LoginLogic login = new LoginLogic(UserName.Text, PassWord.Password);
             if (login.UserAuthentication())
             {
                 // For demonstration purposes, we will just navigate to the AppView without actual authentication

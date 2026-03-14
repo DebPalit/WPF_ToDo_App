@@ -33,8 +33,8 @@
         <TextBox x:Name="UserName" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="2"
                      TextWrapping="Wrap" VerticalAlignment="Center" Width="170" Height="30" FontWeight="Bold" FontSize="15"/>
 
-        <TextBox x:Name="PassWord" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="3" 
-                 TextWrapping="Wrap" VerticalAlignment="Center" Width="170" Height="30" FontWeight="Bold" FontSize="15"/>
+        <PasswordBox x:Name="PassWord" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="3" 
+                   VerticalAlignment="Center" Width="170" Height="30" FontWeight="Bold" FontSize="15"/>
 
         <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="7" Fill="Teal"/>
         <Rectangle Grid.Row="0" Grid.Column="3" Grid.RowSpan="7" Fill="Teal"/>
