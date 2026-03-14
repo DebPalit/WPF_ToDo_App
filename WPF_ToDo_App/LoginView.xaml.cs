@@ -23,13 +23,17 @@ namespace WPF_ToDo_App
             InitializeComponent();
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             LoginLogic login = new LoginLogic(UserName.Text, PassWord.Password);
-            if (login.UserAuthentication())
+            User? user = await login.UserAuthentication();
+
+            if (user != null)
             {
-                // For demonstration purposes, we will just navigate to the AppView without actual authentication
-                Window.GetWindow(this).Content = new AppView();
+                //UserCreationLogic logic = new UserCreationLogic();
+                //logic.CreateUser("test.user", "12345");
+
+                Window.GetWindow(this).Content = new AppView(user.UserId);
             }
             else
             {

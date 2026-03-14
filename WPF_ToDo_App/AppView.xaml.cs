@@ -18,27 +18,54 @@ namespace WPF_ToDo_App
     /// </summary>
     public partial class AppView : UserControl
     {
-        public AppView()
+        private bool removeNothingTodo;
+        public Guid UserId { get; }
+        TaskCRUDLogic task = new TaskCRUDLogic();
+        public AppView(Guid userid)
         {
             InitializeComponent();
-            NothingTodo();
+
+            this.UserId = userid;
+
+            task.GetTasksByUserIdAsync(UserId).ContinueWith(t =>
+            {
+                if (t.Result.Count == 0)
+                {
+                    Dispatcher.Invoke(() => NothingTodo());
+                    removeNothingTodo = true;
+                }
+                else
+                {
+                    foreach (var task in t.Result)
+                    {
+                        Dispatcher.Invoke(() => CreateDynamicCheckBox($"[{task.CreationDateTime}]: {task.TaskDetails}", task.TaskId));
+                    }
+                }
+            });
+
         }
 
-        private bool removeNothingTodo = false;
-        private void CreateTodo_Click(object sender, RoutedEventArgs e)
+        private async void CreateTodo_Click(object sender, RoutedEventArgs e)
         {
-            if (!removeNothingTodo)
-            {
-                taskShow.Children.Clear();
-                removeNothingTodo = true;
-            }
             string taskInputText = taskInput.Text;
 
             if (!string.IsNullOrEmpty(taskInputText) && taskInputText.Length < 200)
             {
-                string taskInputText_timestamp = $"[{DateTime.Now}]: {taskInputText}";
+                DateTime CreatedAt = DateTime.Now;
+                string taskInputText_timestamp = $"[{CreatedAt}]: {taskInputText}";
 
-                CreateDynamicCheckBox(taskInputText_timestamp);
+                Guid taskId = await task.CreateTaskAsync(UserId, CreatedAt, taskInputText);
+                if (taskId != Guid.Empty) 
+                {
+                    if (removeNothingTodo)
+                    {
+                        taskShow.Children.Clear();
+                        removeNothingTodo = false;
+                    }
+                    CreateDynamicCheckBox(taskInputText_timestamp, taskId);
+                }
+                else
+                    MessageBox.Show("Failed to create task. Please try again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 taskInput.Clear();
             }
@@ -59,7 +86,7 @@ namespace WPF_ToDo_App
             RemoveCheckedTasks(taskShow);
         }
 
-        private void CreateDynamicCheckBox(string taskText)
+        private void CreateDynamicCheckBox(string taskText, Guid taskid)
         {
 
             TextBlock textBlock = new TextBlock
@@ -74,17 +101,20 @@ namespace WPF_ToDo_App
             CheckBox newCheckBox = new CheckBox
             {
                 Content = textBlock,
+                Tag = taskid,
                 VerticalContentAlignment = VerticalAlignment.Top
             };
 
             taskShow.Children.Add(newCheckBox);
         }
-        private void RemoveCheckedTasks(StackPanel stackPanel)
+        private async void RemoveCheckedTasks(StackPanel stackPanel)
         {
             List<CheckBox> toRemove = stackPanel.Children
                             .OfType<CheckBox>()
                             .Where(cb => cb.IsChecked == true)
                             .ToList();
+
+            List<Guid> toRemoveIds = toRemove.Select(cb => (Guid)cb.Tag).ToList();
 
             if (!toRemove.Any())
             {
@@ -92,13 +122,23 @@ namespace WPF_ToDo_App
                 return;
             }
 
-            foreach (CheckBox cb in toRemove)
-                stackPanel.Children.Remove(cb);
+            foreach (Guid taskid in toRemoveIds) 
+            {
+                bool removedTask = await task.DeleteTaskAsync(taskid);
+
+                if (removedTask) 
+                {
+                    stackPanel.Children.Remove(toRemove.First(cb => (Guid)cb.Tag == taskid));
+                }
+                else
+                    MessageBox.Show($"Failed to remove task with ID: {taskid}. Please try again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
 
             if (!stackPanel.Children.OfType<CheckBox>().Any())
             {
                 NothingTodo();
-                removeNothingTodo = false;
+                removeNothingTodo = true;
             }
         }
 

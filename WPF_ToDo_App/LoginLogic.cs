@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,20 +16,23 @@ namespace WPF_ToDo_App
             PassWord = password;
         }
 
-        public bool UserAuthentication()
+        public async Task<User?> UserAuthentication()
         {
             if (UserName != null && PassWord != null)
             {
-                //hardcoded now, will fix later
-                if (UserName == "deb.palit" && PassWord == "722144")
-                {
-                    return true;
-                }
-                else
-                    return false;
+                AppDbContext db = new AppDbContext();
+                User? user = await db.UserDetails.FirstOrDefaultAsync(u => u.Username == UserName);
+
+                if (user == null)
+                    return null;
+
+                bool isPasswordValid = BCrypt.Net.BCrypt.Verify(PassWord, user.PasswordHash);
+
+                return isPasswordValid ? user : null;
             }
+
             else
-                return false;
+                return null;
         }
     }
 }
